@@ -1,0 +1,37 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">sr. no.</th>
+        <th scope="col"> document name</th>
+        <th scope="col">document description</th>
+        <th scope="col">file</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for ele in user %}
+        
+        
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        <td>{{ele.docs_name}}</td>
+        <td>{{ele.docs_desc}}</td>
+        <td><img src='/media/{{ele.docs_image}}' style="height:100px;width:100px;"></td>
+
+        <td><a href='/delete_doc/{{ele.id}}' class='btn btn-success'>delete</a>
+            <br>
+            <br>
+            <a href='/update_doc/{{ele.id}}' class='btn btn-success'>update</a>
+      </tr></td>
+        
+
+      {% endfor %}
+    </tbody>
+  </table>
+        
+{% endblock %}

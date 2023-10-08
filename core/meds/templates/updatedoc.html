@@ -1,0 +1,50 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class='container mt-5'>
+          
+    <form class='col-6 mx-auto card p-3 shadow-lg' method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <h2>update document</h2>
+        <hr>
+
+        
+        
+        
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">document name</label>
+            <input type="text" class="form-control" name='document_name' value='{{data.docs_name}}' id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">document description</label>
+            <input type="text" class="form-control" name='document_description' value='{{data.docs_desc}}' id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">image</label>
+                <input type="file" class="form-control" name='image' value='/media/{{data.docs_image}}' id="exampleInputPassword1">
+              </div>
+
+              <button type="submit" class="btn btn-primary btn-success">update document</button>
+
+              
+
+           
+
+            
+          
+    </form>
+
+      
+
+      
+  
+
+      
+</div>
+        
+{% endblock %}

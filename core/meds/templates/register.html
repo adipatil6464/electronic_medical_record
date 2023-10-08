@@ -1,0 +1,70 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+<div class='container mt-5'>
+          
+    <form class='col-6 mx-auto card p-3 shadow-lg' method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+        <h2>REGISTER</h2>
+        <hr>
+        
+        {% if messages %}
+        <div class="alert alert-primary" role="alert">        
+                  
+        <ul class="messages">
+        {% for message in messages %}
+        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+        {% endfor %}
+        </ul>
+        
+    </div>
+    {% endif %}
+
+        <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">full name</label>
+            <input type="text" class="form-control" name='name' id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">username</label>
+            <input type="text" class="form-control" name='user_name' id="exampleInputEmail1" aria-describedby="emailHelp">
+          </div>
+        
+            <div class="mb-3">
+              <label for="exampleInputEmail1" class="form-label">email</label>
+              <input type="email" class="form-control" name='email' id="exampleInputEmail1" aria-describedby="emailHelp">
+              <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            </div>
+            <div class="mb-3">
+              <label for="exampleInputPassword1" class="form-label">age</label>
+              <input type="text" class="form-control" name='age' id="exampleInputPassword1">
+            </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">address</label>
+                <input type="text" class="form-control" name='address' id="exampleInputPassword1">
+              </div>
+
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">password</label>
+                <input type="password" class="form-control" name='password' id="exampleInputPassword1">
+              </div>
+
+            <p>do you have account <a href='/signin/'>login account</a></p>
+            
+            <button type="submit" class="btn btn-primary">Submit</button>
+          
+    </form>
+
+      
+
+      
+  
+
+      
+</div>
+        
+{% endblock %}
