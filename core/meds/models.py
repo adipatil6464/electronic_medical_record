@@ -66,6 +66,7 @@ class doctor(models.Model):
     doctor_name = models.CharField(max_length=100)
     doctor_mail = models.EmailField(unique=True)
     doctor_age = models.IntegerField()
+    doctor_specialization = models.CharField(max_length=100)
     doctor_address = models.CharField(max_length=100)
     doctor_password = models.CharField(max_length=100)
 

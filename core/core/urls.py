@@ -27,6 +27,7 @@ urlpatterns = [
     path('doctor_signin/',doctor_signin,name='doctor_signin'),
     path('doctor_register/',doctor_register,name='doctor_register'),
     path('show_patient/',showPatient,name='showPatient'),
+    path('show_doctor/<pat_id>/',showDoctor,name='showDoctor'),
     path('add_doc/<patient_id>',addDoc,name='addDoc'),
     path('show_docs/<patient_id>',showDoc,name='showDoc'),
     path('delete_doc/<id>',deleteDoc,name='deleteDoc'),

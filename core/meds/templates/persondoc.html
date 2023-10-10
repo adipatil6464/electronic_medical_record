@@ -4,9 +4,11 @@
 {% block content %}
 
 
-        
+{% for ele in data %}
+       
+<a href='/show_doctor/{{ele.pat_id}}' class='btn btn-success'>get appointment</a>
 
-
+{% endfor %} 
 <table class="table">
     <thead>
       <tr>

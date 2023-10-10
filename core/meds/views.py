@@ -76,6 +76,7 @@ def doctor_register(request):
         age = request.POST['age']
         address = request.POST['address']
         password = request.POST['password']
+        specialization = request.POST['specialization']
 
         user = doctor.objects.filter(doctor_id__doctorid = user_name)
 
@@ -86,7 +87,7 @@ def doctor_register(request):
         
         
         doctorId_obj=doctorId.objects.create(doctorid=user_name) 
-        en = doctor(doctor_id = doctorId_obj,doctor_name=name, doctor_mail=email, doctor_age=age, doctor_address=address, doctor_password=password)
+        en = doctor(doctor_id = doctorId_obj,doctor_name=name, doctor_mail=email, doctor_age=age, doctor_address=address, doctor_password=password, doctor_specialization=specialization)
         en.save()
         messages.success(request,'register successfully')
 
@@ -169,6 +170,22 @@ def updateDoc(request,id):
 def personDoc(request,pat_id):
     data = patientDocument.objects.filter(pat_id=pat_id)
     return render(request,'persondoc.html',{'data':data})
+
+
+def appointment(request,pat_id,dr_id):
+    patient_info= patient.objects.get(patient_id__patientid__icontains=pat_id)
+    doctor_info= doctor.objects.get(doctor_id__doctorid=dr_id)
+    
+
+def showDoctor(request,pat_id):
+    doctor_data = doctor.objects.all()
+    patient_data = patient.objects.filter(patient_id__patientid=pat_id)
+
+    if request.method == 'POST':
+        search = request.POST['search']
+
+        data = doctor.objects.filter(Q(doctor_name__icontains=search) | Q(doctor_specialization__icontains=search))
+    return render(request,'showdoctor.html',{'data':doctor_data})
 
 # Create your views here.
 

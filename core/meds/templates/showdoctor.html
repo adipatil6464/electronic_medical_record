@@ -1,0 +1,55 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+
+<div class='container mt-5'>
+          
+    <form method='post' enctype='multipart/form-data'>
+        {% csrf_token %}
+      
+
+          <div class="mb-3">
+            <input type="text" class="form-control" name='search' id="exampleInputEmail1" placeholder="search" aria-describedby="emailHelp">
+            <button type="submit" class="btn btn-primary">Submit</button>
+          </div>
+  
+            
+            
+          
+    </form>       
+</div>
+        
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">sr. no.</th>
+        <th scope="col">name</th>
+        <th scope="col">specialization</th>
+        <th scope="col">action</th>
+      </tr>
+    </thead>
+    <tbody>
+        {% for ele in data %}
+        
+        
+      <tr>
+        <th scope="row">{{forloop.counter}}</th>
+        {% comment %} <td>{{ele.doctor_id}}</td> {% endcomment %}
+        <td>{{ele.doctor_name}}</td>
+        <td>{{ele.doctor_specialization}}</td>
+        <td><a href='/add_doc/{{ele.doctor_id}}' class='btn btn-success'>get appointment</a>
+      </tr></td>
+
+      {% endfor %}
+    </tbody>
+  </table>
+        
+{% endblock %}
