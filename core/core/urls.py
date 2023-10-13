@@ -32,7 +32,8 @@ urlpatterns = [
     path('show_docs/<patient_id>',showDoc,name='showDoc'),
     path('delete_doc/<id>',deleteDoc,name='deleteDoc'),
     path('update_doc/<id>',updateDoc,name='updateDoc'),
-    path('person_doc/<str:pat_id>/',personDoc,name='person_doc')
+    path('person_doc/<str:pat_id>/',personDoc,name='person_doc'),
+    path('appointment/<doctor_id>/<patient_id>/',appointment,name='appointment')
 
 ]
 

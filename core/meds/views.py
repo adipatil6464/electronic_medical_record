@@ -172,20 +172,21 @@ def personDoc(request,pat_id):
     return render(request,'persondoc.html',{'data':data})
 
 
-def appointment(request,pat_id,dr_id):
+def appointment(request,doctor_id,patient_id):
     patient_info= patient.objects.get(patient_id__patientid__icontains=pat_id)
-    doctor_info= doctor.objects.get(doctor_id__doctorid=dr_id)
+    doctor_info= doctor.objects.get(doctor_id__doctorid=doctor_id)
+    return render(request,'appointment.html')
     
 
 def showDoctor(request,pat_id):
     doctor_data = doctor.objects.all()
-    patient_data = patient.objects.filter(patient_id__patientid=pat_id)
+    patient_data = patient.objects.get(patient_id__patientid=pat_id)
 
     if request.method == 'POST':
         search = request.POST['search']
 
         data = doctor.objects.filter(Q(doctor_name__icontains=search) | Q(doctor_specialization__icontains=search))
-    return render(request,'showdoctor.html',{'data':doctor_data})
+    return render(request,'showdoctor.html',{'data':doctor_data,'patient_data':patient_data})
 
 # Create your views here.
 
