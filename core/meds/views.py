@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate,login
 from django.http import HttpResponse
 from django.db.models import Q
 from django.urls import reverse
+from django.core.mail import send_mail
 
 def register(request):
 
@@ -173,8 +174,23 @@ def personDoc(request,pat_id):
 
 
 def appointment(request,doctor_id,patient_id):
-    patient_info= patient.objects.get(patient_id__patientid__icontains=pat_id)
+    patient_info= patient.objects.get(patient_id__patientid__icontains=patient_id)
     doctor_info= doctor.objects.get(doctor_id__doctorid=doctor_id)
+
+    if request.method == 'POST':
+        disease_description = request.POST['disease_description']
+
+        send_mail(
+        "appointment",
+        f"mail: {patient_info.patient_mail} \n patient id: {patient_info.patient_id} \n patient name: {patient_info.patient_name} \n patient age: {patient_info.patient_age} \n appointment for doctor: {doctor_info.doctor_name} \n doctor's specialization: {doctor_info.doctor_specialization} \n disease description: {disease_description}",
+        "testm6464@gmail.com",
+        ["adipatil6464@gmail.com"],
+        fail_silently=False,
+        )
+
+    
+
+
     return render(request,'appointment.html')
     
 
