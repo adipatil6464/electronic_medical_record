@@ -24,6 +24,8 @@
           
     </form>       
 </div>
+
+<a href="{% url 'doctorAppointment' doctor_id %}" class='btn btn-success'>my appointment</a>
         
 
 
@@ -49,12 +51,12 @@
         <td><a href='/add_doc/{{ele.patient_id}}' class='btn btn-success'>add</a>
             <br>
             <br>
-            <a href='/show_docs/{{ele.patient_id}}' class='btn btn-success'>see</a>
+            <a href="{% url 'showDoc' ele.patient_id doctor_id %}" class='btn btn-success'>see</a>
       </tr></td>
 
       {% endfor %}
     </tbody>
   </table>
-  <a href="{% url 'doctorAppointment' doctor_id %}" class='btn btn-success'>see</a>
+ 
         
 {% endblock %}

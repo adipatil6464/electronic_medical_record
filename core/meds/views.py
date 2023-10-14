@@ -139,17 +139,17 @@ def showPatient(request,doctor_id):
     return render(request,'showpatient.html',{'data':data,'doctor_id':doctor_id})
 
 
-def showDoc(request,patient_id):
+def showDoc(request,patient_id,doctor_id):
     user = patientDocument.objects.filter(pat_id=patient_id)
-    return render(request,'showdoc.html',{'user':user})
+    return render(request,'showdoc.html',{'user':user,'doctor_id':doctor_id})
 
 
-def deleteDoc(request,id):
+def deleteDoc(request,id,doctor_id):
     patientDocument.objects.get(id=id).delete()
-    return redirect('/show_patient/')
+    return redirect(reverse('showPatient', kwargs={'doctor_id':doctor_id}))
 
 
-def updateDoc(request,id):
+def updateDoc(request,id,doctor_id):
     queryset = patientDocument.objects.get(id=id)
 
     if request.method == 'POST':
@@ -164,7 +164,7 @@ def updateDoc(request,id):
             queryset.docs_image=image
 
         queryset.save()
-        return redirect('/show_patient/')
+        return redirect(reverse('showPatient', kwargs={'doctor_id':doctor_id}))
 
     return render(request,'updatedoc.html',{'data':queryset})
 
