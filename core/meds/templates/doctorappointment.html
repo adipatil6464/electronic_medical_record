@@ -1,0 +1,38 @@
+
+{% extends 'base.html' %}
+
+{% block content %}
+
+
+
+
+
+
+
+        
+
+
+<table class="table">
+    <thead>
+      <tr>
+        <th scope="col">sr. no.</th>
+        <th scope="col">id</th>
+      </tr>
+    </thead>
+    <tbody>
+
+
+    {% for ele in user_data %}
+        
+        
+      <tr>
+        <td>{{forloop.counter}}</td>
+        <td>{{ele.patient_id}}</td>
+      </tr>
+
+    {% endfor %}
+    </tbody>
+  </table>
+  {% comment %} <a href="{% url 'doctorAppointment' doctor_id %}" class='btn btn-success'>see</a> {% endcomment %}
+        
+{% endblock %}

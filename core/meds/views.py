@@ -7,7 +7,7 @@ from django.contrib.auth import authenticate,login
 from django.http import HttpResponse
 from django.db.models import Q
 from django.urls import reverse
-from django.core.mail import send_mail
+from django.core.mail import send_mail,EmailMultiAlternatives
 
 def register(request):
 
@@ -103,7 +103,7 @@ def doctor_signin(request):
         if doctor.objects.filter(doctor_id__doctorid = user_name).exists():
             user = doctor.objects.get(doctor_id__doctorid = user_name)
             if user.doctor_password == password:
-                return redirect('/show_patient/')
+                return redirect(reverse('showPatient', kwargs={'doctor_id':user_name}))
             else:
                 messages.error(request,'wrong password')
                 return redirect('/doctor_signin/')
@@ -128,14 +128,15 @@ def addDoc(request,patient_id):
     return render(request, 'adddoc.html',{'patient_id':patient_id})
 
 
-def showPatient(request):
+def showPatient(request,doctor_id):
     data = patient.objects.all()
+    
 
     if request.method == 'POST':
         search = request.POST['search']
 
         data = patient.objects.filter(Q(patient_id__patientid__icontains=search)| Q(patient_name__icontains=search))
-    return render(request,'showpatient.html',{'data':data})
+    return render(request,'showpatient.html',{'data':data,'doctor_id':doctor_id})
 
 
 def showDoc(request,patient_id):
@@ -179,6 +180,9 @@ def appointment(request,doctor_id,patient_id):
 
     if request.method == 'POST':
         disease_description = request.POST['disease_description']
+        
+        # Appointment_Id = AppointmentId.objects.create(appointment_id=str(apt_id))
+        Appointment.objects.create(patient_id=patient_info.patient_id,doctor_id=doctor_info.doctor_id)
 
         send_mail(
         "appointment",
@@ -187,6 +191,9 @@ def appointment(request,doctor_id,patient_id):
         ["adipatil6464@gmail.com"],
         fail_silently=False,
         )
+
+
+
 
     
 
@@ -203,6 +210,11 @@ def showDoctor(request,pat_id):
 
         data = doctor.objects.filter(Q(doctor_name__icontains=search) | Q(doctor_specialization__icontains=search))
     return render(request,'showdoctor.html',{'data':doctor_data,'patient_data':patient_data})
+
+
+def doctorAppointment(request,doctor_id):
+    user_data = Appointment.objects.filter(doctor_id=doctor_id)
+    return render(request,'doctorappointment.html',{'user_data':user_data})
 
 # Create your views here.
 

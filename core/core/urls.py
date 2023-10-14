@@ -26,14 +26,15 @@ urlpatterns = [
     path('signin/',signin, name='signin'),
     path('doctor_signin/',doctor_signin,name='doctor_signin'),
     path('doctor_register/',doctor_register,name='doctor_register'),
-    path('show_patient/',showPatient,name='showPatient'),
+    path('show_patient/<doctor_id>',showPatient,name='showPatient'),
     path('show_doctor/<pat_id>/',showDoctor,name='showDoctor'),
     path('add_doc/<patient_id>',addDoc,name='addDoc'),
     path('show_docs/<patient_id>',showDoc,name='showDoc'),
     path('delete_doc/<id>',deleteDoc,name='deleteDoc'),
     path('update_doc/<id>',updateDoc,name='updateDoc'),
     path('person_doc/<str:pat_id>/',personDoc,name='person_doc'),
-    path('appointment/<doctor_id>/<patient_id>/',appointment,name='appointment')
+    path('appointment/<doctor_id>/<patient_id>/',appointment,name='appointment'),
+    path('doctor_appointment/<doctor_id>/',doctorAppointment,name='doctorAppointment'),
 
 ]
 

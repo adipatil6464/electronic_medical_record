@@ -77,6 +77,14 @@ class doctor(models.Model):
     class META:
         ordering = ['doctor_name']
         verbose_name = 'doctor'
+
+
+
+
+class Appointment(models.Model):
+    patient_id = models.CharField(max_length=100)
+    doctor_id = models.CharField(max_length=100)
+    
 # Create your models here.
 
 
