@@ -178,19 +178,23 @@ def appointment(request,doctor_id,patient_id):
     patient_info= patient.objects.get(patient_id__patientid__icontains=patient_id)
     doctor_info= doctor.objects.get(doctor_id__doctorid=doctor_id)
 
-    if request.method == 'POST':
-        disease_description = request.POST['disease_description']
-        
-        # Appointment_Id = AppointmentId.objects.create(appointment_id=str(apt_id))
-        Appointment.objects.create(patient_id=patient_info.patient_id,doctor_id=doctor_info.doctor_id)
+    if Appointment.objects.filter(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).exists():
+        messages.error(request,'please wait until your previous appointment get confirm')
+    else:
+        if request.method == 'POST':
+            disease_description = request.POST['disease_description']
+            
+            # Appointment_Id = AppointmentId.objects.create(appointment_id=str(apt_id))
+            Appointment.objects.create(patient_id=patient_info.patient_id,doctor_id=doctor_info.doctor_id)
 
-        send_mail(
-        "appointment",
-        f"mail: {patient_info.patient_mail} \n patient id: {patient_info.patient_id} \n patient name: {patient_info.patient_name} \n patient age: {patient_info.patient_age} \n appointment for doctor: {doctor_info.doctor_name} \n doctor's specialization: {doctor_info.doctor_specialization} \n disease description: {disease_description}",
-        "testm6464@gmail.com",
-        ["adipatil6464@gmail.com"],
-        fail_silently=False,
-        )
+            send_mail(
+            "appointment",
+            f"mail: {patient_info.patient_mail} \n patient id: {patient_info.patient_id} \n patient name: {patient_info.patient_name} \n patient age: {patient_info.patient_age} \n appointment for doctor: {doctor_info.doctor_name} \n doctor's specialization: {doctor_info.doctor_specialization} \n disease description: {disease_description}",
+            "testm6464@gmail.com",
+            ["adipatil6464@gmail.com"],
+            fail_silently=False,
+            )
+            messages.success(request,'appointment send successfully')
 
 
 
@@ -216,6 +220,24 @@ def doctorAppointment(request,doctor_id):
     user_data = Appointment.objects.filter(doctor_id=doctor_id)
     return render(request,'doctorappointment.html',{'user_data':user_data})
 
+def confirmAppointment(request,patient_id,doctor_id):
+
+    if request.method == 'POST':
+        contact_date = request.POST['contact_date']
+        contact_time = request.POST['contact_time']
+
+        ConfirmAppointment.objects.create(patient_id=patient_id,doctor_id=doctor_id,contact_date=contact_date,contact_time=contact_time)
+        Appointment.objects.get(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).delete()
+        return redirect(reverse('doctorAppointment', kwargs={'doctor_id':doctor_id}))
+    
+    
+
+    return render(request,'confirmappointment.html')
+
+def confirmAppointmentList(request,doctor_id):
+    data = ConfirmAppointment.objects.filter(doctor_id=doctor_id)
+    
+    return render()
 # Create your views here.
 
 
