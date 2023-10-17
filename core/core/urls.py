@@ -35,6 +35,7 @@ urlpatterns = [
     path('person_doc/<str:pat_id>/',personDoc,name='person_doc'),
     path('appointment/<doctor_id>/<patient_id>/',appointment,name='appointment'),
     path('doctor_appointment/<doctor_id>/',doctorAppointment,name='doctorAppointment'),
+    path('confirm_appointment/<patient_id>/<doctor_id>/',confirmAppointment,name='confirmAppointment')
 
 ]
 
