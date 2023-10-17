@@ -238,6 +238,10 @@ def confirmAppointmentList(request,doctor_id):
     data = ConfirmAppointment.objects.filter(doctor_id=doctor_id)
     
     return render(request,'confirmappointmentlist.html',{'data':data})
+
+def remove(request,patient_id,doctor_id):
+    ConfirmAppointment.objects.get(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).delete()
+    return redirect(reverse('confirmAppointmentList', kwargs={'doctor_id':doctor_id}))
 # Create your views here.
 
 
