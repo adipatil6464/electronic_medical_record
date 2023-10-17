@@ -17,10 +17,6 @@ class AppointmentAdmin(admin.ModelAdmin):
 
 admin.site.register(Appointment,AppointmentAdmin)
 
-class ConfirmAppointmentAdmin(admin.ModelAdmin):
-    list_display = ['patient_id','doctor_id','contact_date','contact_time']
-
-admin.site.register(ConfirmAppointment,ConfirmAppointmentAdmin)
 
 # Register your models here.
 

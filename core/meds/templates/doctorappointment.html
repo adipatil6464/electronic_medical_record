@@ -17,7 +17,6 @@
       <tr>
         <th scope="col">sr. no.</th>
         <th scope="col">id</th>
-        <th scope="col">action</th>
       </tr>
     </thead>
     <tbody>
@@ -29,7 +28,6 @@
       <tr>
         <td>{{forloop.counter}}</td>
         <td>{{ele.patient_id}}</td>
-        <td><a href="{% url 'confirmAppointment' ele.patient_id ele.doctor_id %}" class='btn btn-success'>confirm appointment</a></td>
       </tr>
 
     {% endfor %}

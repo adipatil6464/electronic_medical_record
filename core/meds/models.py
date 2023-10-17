@@ -84,13 +84,7 @@ class doctor(models.Model):
 class Appointment(models.Model):
     patient_id = models.CharField(max_length=100)
     doctor_id = models.CharField(max_length=100)
-
-
-class ConfirmAppointment(models.Model):
-    patient_id = models.CharField(max_length=100)
-    doctor_id = models.CharField(max_length=100)
-    contact_date = models.DateField(blank=True, null=True)
-    contact_time = models.TimeField(blank=True, null=True)
+    
 # Create your models here.
 
 
