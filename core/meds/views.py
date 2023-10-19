@@ -265,6 +265,7 @@ def success(request,doctor_id,patient_id):
         user = PaymentDetails.objects.filter(payment_id=order_id).first()
         user.paid= True
         user.save()
+        Appointment.objects.create(patient_id=patient_id,doctor_id=doctor_id)
     return render(request,'success.html',{'doctor_id':doctor_id,'patient_id':patient_id})
 # Create your views here.
 
