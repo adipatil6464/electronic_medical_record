@@ -91,6 +91,13 @@ class ConfirmAppointment(models.Model):
     doctor_id = models.CharField(max_length=100)
     contact_date = models.DateField(blank=True, null=True)
     contact_time = models.TimeField(blank=True, null=True)
+
+class PaymentDetails(models.Model):
+    patient_id = models.CharField(max_length=100)
+    doctor_id = models.CharField(max_length=100)
+    payment_id = models.CharField(max_length=100)
+    paid =models.BooleanField(default=False)
+
 # Create your models here.
 
 

@@ -7,22 +7,10 @@
 
 <div class='container mt-5'>
           
-    <form class='col-6 mx-auto card p-3 shadow-lg' method='post' enctype='multipart/form-data'>
+    <form class='col-6 mx-auto card p-3 shadow-lg' enctype='multipart/form-data' method='POST'>
         {% csrf_token %}
         <h2>details</h2>
         <hr>
-        
-        {% if messages %}
-        <div class="alert alert-primary" role="alert">        
-                  
-        <ul class="messages">
-        {% for message in messages %}
-        <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-        {% endfor %}
-        </ul>
-        
-    </div>
-    {% endif %}
 
 
           <div class="mb-3">
@@ -36,16 +24,32 @@
             <button type="submit" class="btn btn-primary">Submit</button>
           
     </form>
-
-
-    
-
-      
-
-      
-  
-
       
 </div>
-        
+
+
+{% if payment %}
+<div class="text-center mx-auto">
+<form action="{% url 'success' doctor_id patient_id %}"method="POST">
+  <script
+  src="https://checkout.razorpay.com/v1/checkout.js"
+  data-key="rzp_test_t3v6Og0QLCy6AZ"
+  data-amount = "{{payment.amount}}"
+  data-currency="INR"
+  data-order_id="{{payment.id}}"
+  data-buttontext="Pay with Razorpay"
+  data-name="Coffee Corp"
+  data-description="Test transaction"
+  data-image="https://example.com/your_logo.jpg"
+  data-prefill.name = "Gaurav kumar"
+  data-prefill.email="gaurav.kumar@example.com"
+  data-prefill.contact="9999999999"
+  data-theme.color="#F37254"
+  ></script>
+  <input type="hidden" custom="Show Element " name="hidden">
+</form>
+{% endif %}
+</div>
+
+
 {% endblock %}

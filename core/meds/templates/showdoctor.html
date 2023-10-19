@@ -45,7 +45,7 @@
         {% comment %} <td>{{ele.doctor_id}}</td> {% endcomment %}
         <td>{{ele.doctor_name}}</td>
         <td>{{ele.doctor_specialization}}</td>
-        <td><a href="{% url 'appointment' ele.doctor_id patient_data.patient_id %}" class='btn btn-success'>get appointment</a>
+        <td><a href="{% url 'appointment' ele.doctor_id patient_data.patient_id %}" class='btn btn-success' target='blank'>get appointment</a>
       </tr></td>
 
       {% endfor %}

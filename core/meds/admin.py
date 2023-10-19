@@ -22,6 +22,8 @@ class ConfirmAppointmentAdmin(admin.ModelAdmin):
 
 admin.site.register(ConfirmAppointment,ConfirmAppointmentAdmin)
 
+admin.site.register(PaymentDetails)
+
 # Register your models here.
 
 

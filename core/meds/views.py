@@ -8,6 +8,8 @@ from django.http import HttpResponse
 from django.db.models import Q
 from django.urls import reverse
 from django.core.mail import send_mail,EmailMultiAlternatives
+import razorpay
+from django.views.decorators.csrf import csrf_exempt
 
 def register(request):
 
@@ -174,35 +176,7 @@ def personDoc(request,pat_id):
     return render(request,'persondoc.html',{'data':data})
 
 
-def appointment(request,doctor_id,patient_id):
-    patient_info= patient.objects.get(patient_id__patientid__icontains=patient_id)
-    doctor_info= doctor.objects.get(doctor_id__doctorid=doctor_id)
 
-    if Appointment.objects.filter(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).exists():
-        messages.error(request,'please wait until your previous appointment get confirm')
-    else:
-        if request.method == 'POST':
-            disease_description = request.POST['disease_description']
-            
-            # Appointment_Id = AppointmentId.objects.create(appointment_id=str(apt_id))
-            Appointment.objects.create(patient_id=patient_info.patient_id,doctor_id=doctor_info.doctor_id)
-
-            send_mail(
-            "appointment",
-            f"mail: {patient_info.patient_mail} \n patient id: {patient_info.patient_id} \n patient name: {patient_info.patient_name} \n patient age: {patient_info.patient_age} \n appointment for doctor: {doctor_info.doctor_name} \n doctor's specialization: {doctor_info.doctor_specialization} \n disease description: {disease_description}",
-            "testm6464@gmail.com",
-            ["adipatil6464@gmail.com"],
-            fail_silently=False,
-            )
-            messages.success(request,'appointment send successfully')
-
-
-
-
-    
-
-
-    return render(request,'appointment.html')
     
 
 def showDoctor(request,pat_id):
@@ -242,6 +216,56 @@ def confirmAppointmentList(request,doctor_id):
 def remove(request,patient_id,doctor_id):
     ConfirmAppointment.objects.get(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).delete()
     return redirect(reverse('confirmAppointmentList', kwargs={'doctor_id':doctor_id}))
+
+
+def appointment(request,doctor_id,patient_id):
+    # patient_info= patient.objects.get(patient_id__patientid__icontains=patient_id)
+    # doctor_info= doctor.objects.get(doctor_id__doctorid=doctor_id)
+
+    # if Appointment.objects.filter(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).exists():
+    #     messages.error(request,'please wait until your previous appointment get confirm')
+    # else:
+    #     if request.method == 'POST':
+    #         disease_description = request.POST['disease_description']
+            
+    #         # Appointment_Id = AppointmentId.objects.create(appointment_id=str(apt_id))
+    #         Appointment.objects.create(patient_id=patient_info.patient_id,doctor_id=doctor_info.doctor_id)
+
+    #         send_mail(
+    #         "appointment",
+    #         f"mail: {patient_info.patient_mail} \n patient id: {patient_info.patient_id} \n patient name: {patient_info.patient_name} \n patient age: {patient_info.patient_age} \n appointment for doctor: {doctor_info.doctor_name} \n doctor's specialization: {doctor_info.doctor_specialization} \n disease description: {disease_description}",
+    #         "testm6464@gmail.com",
+    #         ["adipatil6464@gmail.com"],
+    #         fail_silently=False,
+    #         )
+    #         messages.success(request,'appointment send successfully')
+    if request.method == 'POST':
+        disease_description = request.POST.get('disease_description')
+
+        client = razorpay.Client(auth=("rzp_test_t3v6Og0QLCy6AZ", "CznuoupZQzluTwWC5MiiIWew"))
+        payment = client.order.create({'amount':10000,'currency':'INR','payment_capture':'1'})
+        print(payment)
+        paymentdetails = PaymentDetails(patient_id=patient_id,doctor_id=doctor_id,payment_id=payment['id'])
+        paymentdetails.save()
+        return render(request,'appointment.html',{'payment':payment,'doctor_id':doctor_id,'patient_id':patient_id})
+
+
+    return render(request,'appointment.html')
+
+
+@csrf_exempt
+def success(request,doctor_id,patient_id):
+    if request.method == "POST":
+        a= request.POST
+        order_id=''
+        for key, val in a.items():
+            if key=='razorpay_order_id':
+                order_id= val
+                break
+        user = PaymentDetails.objects.filter(payment_id=order_id).first()
+        user.paid= True
+        user.save()
+    return render(request,'success.html',{'doctor_id':doctor_id,'patient_id':patient_id})
 # Create your views here.
 
 

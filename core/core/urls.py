@@ -34,10 +34,11 @@ urlpatterns = [
     path('update_doc/<id>/<doctor_id>/',updateDoc,name='updateDoc'),
     path('person_doc/<str:pat_id>/',personDoc,name='person_doc'),
     path('appointment/<doctor_id>/<patient_id>/',appointment,name='appointment'),
+    path('success/<doctor_id>/<patient_id>/',success,name='success'),
     path('doctor_appointment/<doctor_id>/',doctorAppointment,name='doctorAppointment'),
     path('confirm_appointment/<patient_id>/<doctor_id>/',confirmAppointment,name='confirmAppointment'),
     path('confirm_appointment_list/<doctor_id>/',confirmAppointmentList,name='confirmAppointmentList'),
-    path('remove/<patient_id>/<doctor_id>/',remove,name='remove')
+    path('remove/<patient_id>/<doctor_id>/',remove,name='remove'),
 
 ]
 
