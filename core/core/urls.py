@@ -20,8 +20,10 @@ from django.conf.urls.static import static
 from django.conf import settings
 from django.contrib.staticfiles.urls import staticfiles_urlpatterns
 from meds.views import *
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('',home,name='home'),
     path('register/', register, name='register'),
     path('signin/',signin, name='signin'),
     path('doctor_signin/',doctor_signin,name='doctor_signin'),

@@ -201,7 +201,7 @@ def confirmAppointment(request,patient_id,doctor_id):
         contact_time = request.POST['contact_time']
 
         ConfirmAppointment.objects.create(patient_id=patient_id,doctor_id=doctor_id,contact_date=contact_date,contact_time=contact_time)
-        Appointment.objects.get(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).delete()
+        Appointment.objects.filter(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).first().delete()
         return redirect(reverse('doctorAppointment', kwargs={'doctor_id':doctor_id}))
     
     
@@ -214,7 +214,7 @@ def confirmAppointmentList(request,doctor_id):
     return render(request,'confirmappointmentlist.html',{'data':data})
 
 def remove(request,patient_id,doctor_id):
-    ConfirmAppointment.objects.get(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).delete()
+    ConfirmAppointment.objects.filter(Q(patient_id=patient_id) & Q(doctor_id=doctor_id)).first().delete()
     return redirect(reverse('confirmAppointmentList', kwargs={'doctor_id':doctor_id}))
 
 
@@ -277,6 +277,9 @@ def success(request,doctor_id,patient_id):
         )
 
     return render(request,'success.html',{'doctor_id':doctor_id,'patient_id':patient_id})
+
+def home(request):
+    return render(request,'home.html')
 # Create your views here.
 
 
