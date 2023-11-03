@@ -69,6 +69,7 @@ class doctor(models.Model):
     doctor_specialization = models.CharField(max_length=100)
     doctor_address = models.CharField(max_length=100)
     doctor_password = models.CharField(max_length=100)
+    
 
     
     def __str__(self) -> str:

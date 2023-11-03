@@ -41,6 +41,7 @@ urlpatterns = [
     path('confirm_appointment/<patient_id>/<doctor_id>/',confirmAppointment,name='confirmAppointment'),
     path('confirm_appointment_list/<doctor_id>/',confirmAppointmentList,name='confirmAppointmentList'),
     path('remove/<patient_id>/<doctor_id>/',remove,name='remove'),
+    path('logout/',Logout, name='Logout'),
 
 ]
 

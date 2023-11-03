@@ -10,6 +10,7 @@ from django.urls import reverse
 from django.core.mail import send_mail,EmailMultiAlternatives
 import razorpay
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth.decorators import login_required
 
 def register(request):
 
@@ -280,6 +281,9 @@ def success(request,doctor_id,patient_id):
 
 def home(request):
     return render(request,'home.html')
+
+def Logout(request):
+    return redirect('/')
 # Create your views here.
 
 
